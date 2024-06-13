@@ -5,7 +5,7 @@ Basically this package working for stylize to input text.
   final controller = PatternTextEditingController(
     patterns: [
       TextPattern(
-        pattern: RegExp('(?:[0-9a-fA-F]{6})', multiLine: true),
+        pattern: RegExp('0x(?:[0-9a-fA-F]{8})'),
         style: const TextStyle(
           color: Color(0xff0000ff),
         ),
@@ -14,44 +14,57 @@ Basically this package working for stylize to input text.
             text: match.group(0),
             style: style.merge(
               TextStyle(
-                color: Color(
-                  int.parse('0xff${match.group(0)}'),
-                ),
+                color: Color(int.parse(match.group(0)!)),
               ),
             ),
           );
         },
       ),
       TextPattern(
-        pattern: RegExp('red', multiLine: true),
+        pattern: RegExp('red'),
         style: const TextStyle(
           color: Color(0xff0000ff),
         ),
       ),
       TextPattern(
-        pattern: RegExp('blue', multiLine: true),
+        pattern: RegExp('blue'),
         style: const TextStyle(
           color: Color(0xffff0000),
         ),
       ),
       TextPattern(
-        pattern: RegExp('italic', multiLine: true),
+        pattern: RegExp('italic'),
         style: const TextStyle(
           fontStyle: FontStyle.italic,
         ),
       ),
       TextPattern(
-        pattern: RegExp('underline', multiLine: true),
+        pattern: RegExp('underline'),
         style: const TextStyle(
           decoration: TextDecoration.underline,
         ),
+      ),
+      TextPattern(
+        pattern: RegExp('button'),
+        style: const TextStyle(
+          decoration: TextDecoration.underline,
+        ),
+        builder: (match, style) {
+          return WidgetSpan(
+            child: FilledButton(
+              onPressed: () {},
+              child: Text(match.group(0)!),
+            ),
+          );
+        },
       ),
     ],
   );
 
 TextField(
-  maxLines: 12,
+  maxLines: 20,
   controller: controller,
+  style: const TextStyle(height: 2),
   decoration: const InputDecoration(
     contentPadding: EdgeInsets.all(20),
   ),

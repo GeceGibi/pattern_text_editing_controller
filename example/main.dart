@@ -64,14 +64,11 @@ class _JsonViewerState extends State<JsonViewer> {
     try {
       final selection = controller.selection;
 
-      /// Test json
-      jsonDecode(data);
-      error = '';
-
       controller
         ..text = encoder.convert(jsonDecode(data))
         ..selection = selection;
 
+      error = '';
       widget.onChanged?.call(controller.text);
     } catch (e) {
       error = e.toString();

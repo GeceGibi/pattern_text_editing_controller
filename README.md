@@ -24,4 +24,8 @@ TextField(
 )
 ```
 
+
+
+
+![Example](https://raw.githubusercontent.com/GeceGibi/pattern_text_editing_controller/main/example.png)
 Basic json editor example code in [example.dart](https://github.com/GeceGibi/pattern_text_editing_controller/blob/main/example/main.dart)

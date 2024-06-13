@@ -24,7 +24,7 @@ class _JsonViewerState extends State<JsonViewer> {
         style: const TextStyle(
           color: Color(0xff98c379),
         ),
-        builder: (match) {
+        builder: (match, _) {
           return TextSpan(
             text: match.group(1),
             children: const [TextSpan(text: ':')],

@@ -29,7 +29,7 @@ class PatternTextEditingController extends TextEditingController {
         entry.splitMapJoin(
           pattern.pattern,
           onMatch: (match) {
-            final span = pattern.builder?.call(match) ??
+            final span = pattern.builder?.call(match, baseStyle) ??
                 TextSpan(
                   text: match.group(0),
                   style: baseStyle.merge(pattern.style),

@@ -50,8 +50,8 @@ Basically this package working for stylize to input text.
   );
 
 TextField(
-  controller: controller,
   maxLines: 12,
+  controller: controller,
   decoration: const InputDecoration(
     contentPadding: EdgeInsets.all(20),
   ),

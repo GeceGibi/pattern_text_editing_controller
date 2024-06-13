@@ -7,13 +7,13 @@ final controller = PatternTextEditingController(
         TextPattern(
             pattern: RegExp('blue', multiLine: true),
             style: const TextStyle(
-                color: Color(0xff0000fff),
+                color: Color(0xff0000ff),
             ),
         ),
         TextPattern(
-            pattern: RegExp('blue', multiLine: true),
+            pattern: RegExp('red', multiLine: true),
             style: const TextStyle(
-                color: Color(0xff0000fff),
+                color: Color(0xffff0000),
             ),
         ),
     ]
@@ -24,4 +24,4 @@ TextField(
 )
 ```
 
-Full example code in [example.dart](https://github.com/GeceGibi/pattern_text_editing_controller/blob/main/example/main.dart) (basic json editor)
+Basic json editor example code in [example.dart](https://github.com/GeceGibi/pattern_text_editing_controller/blob/main/example/main.dart)

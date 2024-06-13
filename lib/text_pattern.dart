@@ -9,5 +9,5 @@ class TextPattern {
 
   final RegExp pattern;
   final TextStyle? style;
-  final TextSpan Function(Match match, TextStyle style)? builder;
+  final InlineSpan Function(Match match, TextStyle style)? builder;
 }

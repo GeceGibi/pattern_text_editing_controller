@@ -56,7 +56,7 @@ class PatternTextEditingController extends TextEditingController {
           return TextSpan(text: entry, style: baseStyle);
         }
 
-        return entry as TextSpan;
+        return entry as InlineSpan;
       }).toList(),
     );
   }

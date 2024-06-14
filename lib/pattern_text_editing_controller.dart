@@ -11,7 +11,7 @@ class PatternTextEditingController extends TextEditingController {
   List<Object> splitMap(
     String value,
     RegExp pattern, {
-    required Object Function(Match) onMatch,
+    required Object Function(Match match) onMatch,
   }) {
     final output = <Object>[];
     var index = 0;
@@ -47,7 +47,7 @@ class PatternTextEditingController extends TextEditingController {
     final baseStyle = style ?? DefaultTextStyle.of(context).style;
 
     for (final pattern in patterns) {
-      var parsedEntries = <Object>[];
+      final parsedEntries = <Object>[];
 
       for (final entry in entries) {
         if (entry is! String) {
@@ -55,16 +55,18 @@ class PatternTextEditingController extends TextEditingController {
           continue;
         }
 
-        parsedEntries = splitMap(
-          entry,
-          pattern.pattern,
-          onMatch: (match) {
-            return pattern.builder?.call(match, baseStyle) ??
-                TextSpan(
-                  text: match.group(0),
-                  style: baseStyle.merge(pattern.style),
-                );
-          },
+        parsedEntries.addAll(
+          splitMap(
+            entry,
+            pattern.pattern,
+            onMatch: (match) {
+              return pattern.builder?.call(match, baseStyle) ??
+                  TextSpan(
+                    text: match.group(0),
+                    style: baseStyle.merge(pattern.style),
+                  );
+            },
+          ),
         );
       }
 

@@ -8,6 +8,35 @@ class PatternTextEditingController extends TextEditingController {
   PatternTextEditingController({required this.patterns});
   final List<TextPattern> patterns;
 
+  List<Object> splitMap(
+    String value,
+    RegExp pattern, {
+    required Object Function(Match) onMatch,
+  }) {
+    final output = <Object>[];
+    var index = 0;
+
+    for (final match in pattern.allMatches(value)) {
+      // Handle the substring before the match (nonMatch)
+      if (match.start > index) {
+        output.add(value.substring(index, match.start));
+      }
+
+      // Handle the match (delimiter)
+      output.add(onMatch(match));
+
+      // Update startIndex for the next iteration
+      index = match.end;
+    }
+
+    // Handle the substring after the last match
+    if (index < value.length) {
+      output.add(value.substring(index));
+    }
+
+    return output;
+  }
+
   @override
   TextSpan buildTextSpan({
     required BuildContext context,
@@ -18,7 +47,7 @@ class PatternTextEditingController extends TextEditingController {
     final baseStyle = style ?? DefaultTextStyle.of(context).style;
 
     for (final pattern in patterns) {
-      final parsedEntries = <Object>[];
+      var parsedEntries = <Object>[];
 
       for (final entry in entries) {
         if (entry is! String) {
@@ -26,21 +55,15 @@ class PatternTextEditingController extends TextEditingController {
           continue;
         }
 
-        entry.splitMapJoin(
+        parsedEntries = splitMap(
+          entry,
           pattern.pattern,
           onMatch: (match) {
-            final span = pattern.builder?.call(match, baseStyle) ??
+            return pattern.builder?.call(match, baseStyle) ??
                 TextSpan(
                   text: match.group(0),
                   style: baseStyle.merge(pattern.style),
                 );
-
-            parsedEntries.add(span);
-            return '';
-          },
-          onNonMatch: (value) {
-            parsedEntries.add(value);
-            return '';
           },
         );
       }

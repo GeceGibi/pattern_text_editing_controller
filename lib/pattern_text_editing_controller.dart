@@ -76,6 +76,7 @@ class PatternTextEditingController extends TextEditingController {
     }
 
     return TextSpan(
+      style: baseStyle,
       children: entries.map((entry) {
         if (entry is String) {
           return TextSpan(text: entry, style: baseStyle);

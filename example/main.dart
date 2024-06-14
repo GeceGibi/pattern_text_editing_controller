@@ -20,7 +20,7 @@ class _JsonViewerState extends State<JsonViewer> {
   final controller = PatternTextEditingController(
     patterns: [
       TextPattern(
-        pattern: RegExp('(".+?"):', multiLine: true),
+        pattern: RegExp(r'"([^"]+?)"\s*:'),
         style: const TextStyle(
           color: Color(0xff98c379),
         ),
@@ -32,25 +32,25 @@ class _JsonViewerState extends State<JsonViewer> {
         },
       ),
       TextPattern(
-        pattern: RegExp('".*?"', multiLine: true),
+        pattern: RegExp('".*?"'),
         style: const TextStyle(
           color: Color(0xff98c379),
         ),
       ),
       TextPattern(
-        pattern: RegExp(r'-?[0-9]\d*(\.\d+)?', multiLine: true),
+        pattern: RegExp(r'-?[0-9]\d*(\.\d+)?'),
         style: const TextStyle(
           color: Color(0xff56B6C2),
         ),
       ),
       TextPattern(
-        pattern: RegExp('(true|false)', multiLine: true),
+        pattern: RegExp('(true|false)'),
         style: const TextStyle(
           color: Color(0xffE5C07B),
         ),
       ),
       TextPattern(
-        pattern: RegExp('null', multiLine: true),
+        pattern: RegExp('null'),
         style: const TextStyle(
           color: Color(0xffE06C75),
         ),

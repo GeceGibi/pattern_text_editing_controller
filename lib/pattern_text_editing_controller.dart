@@ -60,7 +60,7 @@ class PatternTextEditingController extends TextEditingController {
             entry,
             pattern.pattern,
             onMatch: (match) {
-              return pattern.builder?.call(match, baseStyle) ??
+              return pattern.builder?.call(match) ??
                   TextSpan(
                     text: match.group(0),
                     style: baseStyle.merge(pattern.style),
@@ -79,7 +79,7 @@ class PatternTextEditingController extends TextEditingController {
       style: baseStyle,
       children: entries.map((entry) {
         if (entry is String) {
-          return TextSpan(text: entry, style: baseStyle);
+          return TextSpan(text: entry);
         }
 
         return entry as InlineSpan;

@@ -3,6 +3,56 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:pattern_text_editing_controller/pattern_text_editing_controller.dart';
+import 'package:http/http.dart' as http;
+
+void main() {
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  // This widget is the root of your application.
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Flutter Demo',
+      theme: ThemeData(
+        // This is the theme of your application.
+        //
+        // TRY THIS: Try running your application with "flutter run". You'll see
+        // the application has a purple toolbar. Then, without quitting the app,
+        // try changing the seedColor in the colorScheme below to Colors.green
+        // and then invoke "hot reload" (save your changes or press the "hot
+        // reload" button in a Flutter-supported IDE, or press "r" if you used
+        // the command line to start the app).
+        //
+        // Notice that the counter didn't reset back to zero; the application
+        // state is not lost during the reload. To reset the state, use hot
+        // restart instead.
+        //
+        // This works for code too, not just values: Most code changes can be
+        // tested with just a hot reload.
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        useMaterial3: true,
+      ),
+      home: Scaffold(
+        body: FutureBuilder(
+          future: http.get(Uri.parse('https://dummyjson.com/users?limit=3')),
+          builder: (context, snapshot) {
+            if (!snapshot.hasData) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+
+            return JsonViewer(snapshot.requireData.body);
+          },
+        ),
+      ),
+    );
+  }
+}
 
 class JsonViewer extends StatefulWidget {
   const JsonViewer(this.data, {this.onChanged, super.key});
@@ -20,13 +70,11 @@ class _JsonViewerState extends State<JsonViewer> {
   final controller = PatternTextEditingController(
     patterns: [
       TextPattern(
-        pattern: RegExp(r'"([^"]+?)"\s*:'),
-        style: const TextStyle(
-          color: Color(0xff98c379),
-        ),
-        builder: (match, _) {
+        pattern: RegExp(r'("[^"]*?")\s*:'),
+        builder: (match) {
           return TextSpan(
             text: match.group(1),
+            style: const TextStyle(fontWeight: FontWeight.w600),
             children: const [TextSpan(text: ':')],
           );
         },
